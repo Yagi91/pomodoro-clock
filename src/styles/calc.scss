@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+
+$border-red: 1px solid red;
+$border-black: 1px solid black;
+$display: flex;
+$digital-font: "Merriweather Sans", sans-serif;
+$clock-font: "Orbitron", sans-serif;
+@mixin button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@mixin bold($font) {
+  font-weight: bold;
+  font-size: $font;
+}
+@mixin digital-font($font) {
+  font-family: "Merriweather Sans", sans-serif;
+  font-size: $font;
+  font-weight: 300;
+}
+
+button:focus {
+  outline: none !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.clock {
+  margin: auto;
+  width: 60%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  font-size: 1.4em;
+  h3 {
+    top: center;
+    grid-column: 1/6;
+    font-size: 2.5em;
+    font-family: $digital-font;
+    align-self: center;
+  }
+  .break {
+    grid-column: 1/3;
+  }
+  .session {
+    grid-column: 4/6;
+  }
+  section {
+    grid-column: 2/5;
+    grid-row: 3/6;
+    background-image: url(../media/tomato.png);
+    z-index: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .startStop {
+    grid-column: 3/4;
+    display: flex;
+    gap: 2px;
+    height: 50%;
+    align-self: center;
+    justify-content: space-around;
+  }
+}
+
+.break {
+  #break-label {
+    @include bold(1.6em);
+  }
+  button {
+    @include button;
+  }
+  #break-decrement {
+    color: red;
+  }
+  p {
+    @include digital-font(1.6em);
+  }
+}
+.session {
+  #session-label {
+    @include bold(1.6em);
+  }
+  button {
+    @include button;
+  }
+  #session-decrement {
+    color: red;
+  }
+  p {
+    @include digital-font(1.6em);
+  }
+}
+.main {
+  position: relative;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(179, 2, 2, 0.4),
+    0 6px 20px 0 rgba(230, 59, 59, 0.2), -2px -7px 4px 0 rgba(179, 2, 2, 0.4);
+  #timer-label {
+    @include bold(4em);
+    font-family: $digital-font;
+  }
+  #time-left {
+    font-family: $clock-font;
+    font-size: 3em;
+  }
+}
+
+.startStop {
+  button {
+    @include button;
+    i {
+      // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4),
+      //   0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      filter: drop-shadow(3px 8px 5px rgba(20, 20, 20, 0.788));
+    }
+  }
+}
+@media (max-width: 700px) {
+  .clock {
+    font-size: 1em;
+  }
+}
+
+.progress-ring {
+  position: absolute;
+  z-index: -1;
+  .progress-ring_circle {
+    stroke-linecap: round;
+    fill: rgba(255, 255, 0, 0.336);
+    stroke-width: 10px;
+    stroke: black;
+  }
+}
