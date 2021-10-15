@@ -20,6 +20,7 @@
 
     ## USERS STORY COMPLETED and ADDED FUNCTIONALITY OF THE CLOCK
     - User is Able to set *break length* by incrementing or decrementing it.
+    -Use can see a ring reducing it length i proportion to the countdown minutes left.
     - User is able to set *session length* by incrementing or decrementing it.
     - User User can not set The *session* or *break* above 60 mins or below 1 mins
     - User can start and stop the clock by clicking on the play/pause icon.
