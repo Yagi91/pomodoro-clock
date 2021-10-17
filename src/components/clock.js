@@ -38,8 +38,7 @@ class Clock extends React.Component {
       if (this.state.countdown) {
         if (this.state.secs > 0) {
           this.setState((state) => ({ secs: state.secs - 1 }));
-        }
-        if (this.state.secs === 0) {
+        } else if (this.state.secs === 0) {
           if (this.state.mins === 0) {
             this.playRef.current.currentTime = 0;
             this.playRef.current.play();
@@ -50,7 +49,6 @@ class Clock extends React.Component {
                 secs: 0,
                 count: state.breakLength,
               }));
-              console.log(this.state.count);
             } else if (this.state.session === "Break") {
               this.setState((state) => ({
                 session: "Session",
@@ -58,7 +56,6 @@ class Clock extends React.Component {
                 secs: 0,
                 count: state.sessionLength,
               }));
-              console.log(this.state.count);
             }
           } else {
             this.setState((state) => ({ mins: state.mins - 1, secs: 59 }));
@@ -75,6 +72,8 @@ class Clock extends React.Component {
     }, timer);
   }
   reset() {
+    document.getElementById("beep").currentTime = 0;
+    this.playRef.current.pause();
     this.playRef.current.currentTime = 0;
     clearInterval(this.handleCount);
     this.setState((state) => ({
@@ -120,7 +119,6 @@ class Clock extends React.Component {
   }
   increment(e) {
     if (!this.state.countdown) {
-      console.log(e.currentTarget.id);
       if (e.currentTarget.id === "break-increment") {
         if (this.state.breakLength >= 1 && this.state.breakLength < 60) {
           this.setState((state) => ({
@@ -151,7 +149,10 @@ class Clock extends React.Component {
     }
   }
   manageStroke() {
-    let offset = 794.83 - (this.state.mins / this.state.count) * 794.83;
+    let offset =
+      794.83 -
+      ((this.state.mins * 60 + this.state.secs) / (this.state.count * 60)) *
+        794.83;
     return offset;
   }
   render() {
@@ -159,7 +160,7 @@ class Clock extends React.Component {
       circle: {
         strokeDasharray: "794.83",
         strokeDashoffset: this.manageStroke(),
-        transition: `all linear ${this.state.countdown ? "60s" : "0.3s"}`,
+        transition: `all linear ${this.state.countdown ? "1s" : "0.3s"}`,
       },
     };
     return (
@@ -189,17 +190,6 @@ class Clock extends React.Component {
                 cx="50%"
                 cy="53%"
               />
-              {/* <path
-                id="base-timer-path-remaining"
-                stroke-dasharray="283"
-                class="base-timer__path-remaining ${remainingPathColor}"
-                d="
-          M 50, 50
-          m -45, 0
-          a 45,45 0 1,0 90,0
-          a 45,45 0 1,0 -90,0
-        "
-              ></path> */}
             </g>
           </svg>
           <p id="timer-label">{this.state.session}</p>
